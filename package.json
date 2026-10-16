@@ -1,0 +1,14 @@
+{
+  "name": "turbopack-stale-css-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build"
+  },
+  "dependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwindcss": "4.3.3"
+  }
+}
