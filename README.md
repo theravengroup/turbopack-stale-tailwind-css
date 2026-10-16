@@ -5,6 +5,8 @@ Next.js 16.4.2 (Turbopack, `turbopackFileSystemCacheForBuild` on by default) wit
 `next build` over a restored `.next/cache`, the emitted CSS can contain the new commit's utilities
 compiled against the **previous** commit's stylesheet.
 
+Filed as [tailwindlabs/tailwindcss#20584](https://github.com/tailwindlabs/tailwindcss/issues/20584) (the loader) and [vercel/next.js#100326](https://github.com/vercel/next.js/issues/100326) (Turbopack).
+
 ```bash
 pnpm install
 ./repro.sh          # 10 runs; exits 1 if any warm build emitted stale CSS
