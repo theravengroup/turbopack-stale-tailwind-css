@@ -20,10 +20,10 @@ runs=${2:-10}
 concurrency=${TURBO_ENGINE_READ_CONCURRENCY:-1}
 export NEXT_TELEMETRY_DISABLED=1
 
-rm -f postcss.config.mjs plugin/stateless
-case $mode in
-  loader)
-    cat > next.config.mjs <<'EOF'
+# The committed next.config.mjs is the loader setup. It has to exist: without one, Next finds the
+# parent repro's next.config.mjs, which loads @tailwindcss/turbopack. The exit trap restores it.
+write_loader_config() {
+  cat > next.config.mjs <<'EOF'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: {
@@ -35,6 +35,12 @@ const nextConfig = {
 
 export default nextConfig;
 EOF
+}
+
+rm -f postcss.config.mjs plugin/stateless
+case $mode in
+  loader)
+    write_loader_config
     ;;
   postcss)
     printf '/** @type {import('"'"'next'"'"').NextConfig} */\nconst nextConfig = {};\n\nexport default nextConfig;\n' > next.config.mjs
@@ -61,7 +67,7 @@ write_version() {
   printf ':root {\n  --repro-stylesheet: "%s";\n}\n' "$version" > app/globals.css
   printf 'export default function Page() {\n  return <h1 data-version="%s">Hello</h1>;\n}\n' "$version" > app/page.jsx
 }
-trap 'write_version v1; rm -f plugin/stateless' EXIT
+trap 'write_version v1; write_loader_config; rm -f postcss.config.mjs plugin/stateless' EXIT
 
 stale=0
 for i in $(seq 1 "$runs"); do

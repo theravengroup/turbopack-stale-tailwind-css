@@ -3,6 +3,5 @@ node_modules/
 *.log
 *.trace
 next-env.d.ts
-next.config.mjs
 postcss.config.mjs
 plugin/stateless

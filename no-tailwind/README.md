@@ -26,6 +26,11 @@ node trace-summary.mjs   # per setting: builds where the transform was handed th
 Next.js adapter sets 4 on CI production builds; Turbopack's default is 64). `STATELESS=1` turns
 the transform's cache off, which shows the calls without the wrong output.
 
+The committed `next.config.mjs` is the loader setup, so a plain `next build` here (or a Vercel
+project with this folder as its Root Directory) runs `plugin/loader.cjs`. `repro.sh` rewrites it
+for each mode and puts it back on exit. Don't delete it: Next looks for its config in parent
+folders too, and would pick up the Tailwind repro's `next.config.mjs` one level up.
+
 ## What `repro.sh` does
 
 For each run:
