@@ -1,0 +1,13 @@
+{
+  "name": "turbopack-stale-postcss-repro",
+  "private": true,
+  "scripts": {
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "16.5.0-canary.25",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "repro-stateful-plugin": "link:./plugin"
+  }
+}
